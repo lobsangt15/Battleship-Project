@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Shop {
+public class Shop extends Player{
     private int priceOfItem;
     private int amountOfStock;
     private int numBombs;
@@ -8,6 +8,10 @@ public class Shop {
     private int numRecallPanels;
     private boolean purchasedExperimentalMode;
     Scanner scan = new Scanner(System.in);
+
+    public Shop(String name) {
+        super(name);
+    }
 
     public void purchaseMenu() {
         System.out.println("What would you like to purchase?");
@@ -41,19 +45,19 @@ public class Shop {
     }
 
     private void purchaseBomb(int amount) {
-        double cost = amount * 40000;
-        if (Player.getBalance() >= cost) {
+        double cost = amount * 3;
+        if (getPoints() >= cost) {
             numBombs += amount;
 
-            System.out.println("You purchased " + amount + " Bomb(s). Total cars: " + numCars);
+            System.out.println("You purchased " + amount + " Bomb(s). Total Bombs: " + numBombs);
         } else {
             System.out.println("You do not have enough money!");
         }
     }
 
     private void purchaseScoutPlanes(int amount) {
-        double cost = amount * 600000;
-        if (Player.getBalance() >= cost) {
+        double cost = amount * 5;
+        if (getPoints() >= cost) {
             numScoutPlanes += amount;
             System.out.println("You purchased " + amount + " Scout Plane(s). Total Scout Planes: " + numScoutPlanes);
         } else {
@@ -62,8 +66,8 @@ public class Shop {
     }
 
     private void purchaseRecallPanel(int amount) {
-        double cost = amount * 2000000;
-        if (Player.getBalance() >= cost) {
+        double cost = amount * 10;
+        if (getPoints() >= cost) {
             numRecallPanels += amount;
             System.out.println("You purchased " + amount + " Recall Panel(s). Total Recall Panels: " + numRecallPanels);
         } else {
@@ -72,8 +76,8 @@ public class Shop {
     }
 
     private void purchaseExperimentalMode(int amount) {
-        double cost = amount * 1500000;
-        if (Player.getBalance() >= cost) {
+        double cost = amount * 2;
+        if (getPoints() >= cost) {
             purchasedExperimentalMode = true;
             System.out.println("You purchased Experimental Mode! Have fun!");
         } else {
