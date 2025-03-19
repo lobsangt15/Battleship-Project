@@ -1,6 +1,17 @@
 public class Battleship {
-    private int amountOfShipPartsLeft;
-    private int
+    private int shipPartsNum;
+    private String size;
 
+    public Battleship (int shipPartsNum, String size) {
+        this.shipPartsNum = shipPartsNum;
+        this.size = size;
+    }
 
+    public int getShipPartsNum () {
+        return shipPartsNum;
+    }
+
+    public String getSize () {
+        return size;
+    }
 }

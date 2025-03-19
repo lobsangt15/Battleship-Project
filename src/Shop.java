@@ -3,6 +3,10 @@ import java.util.Scanner;
 public class Shop {
     private int priceOfItem;
     private int amountOfStock;
+    private int numBombs;
+    private int numScoutPlanes;
+    private int numRecallPanels;
+    private boolean purchasedExperimentalMode;
     Scanner scan = new Scanner(System.in);
 
     public void purchaseMenu() {
@@ -11,6 +15,7 @@ public class Shop {
         System.out.println("(2) Scout Planes (consumable):  ");
         System.out.println("(3) Recall Panel (consumable)");
         System.out.println("(4) Experimental Mode (toggable): ");
+        System.out.println();
         System.out.println("Enter your choice: ");
         int choice = scan.nextInt();
 
@@ -22,13 +27,13 @@ public class Shop {
                 purchaseBomb(amount);
                 break;
             case 2:
-                purchaseHouse(amount);
+                purchaseScoutPlanes(amount);
                 break;
             case 3:
-                purchaseMansion(amount);
+                purchaseRecallPanel(amount);
                 break;
             case 4:
-                purchaseJet(amount);
+                purchaseExperimentalMode(amount);
                 break;
             default:
                 System.out.println("Invalid option.");
@@ -37,51 +42,40 @@ public class Shop {
 
     private void purchaseBomb(int amount) {
         double cost = amount * 40000;
-        if (user.getBalance() >= cost) {
-            numCars += amount;
-            assetValue += cost * 0.8; // Assets retain 80% of their value
-            user.setBalance(user.getBalance() - cost);
-            user.adjustHappinessForPurchase();
-            System.out.println("You purchased " + amount + " car(s). Total cars: " + numCars);
+        if (Player.getBalance() >= cost) {
+            numBombs += amount;
+
+            System.out.println("You purchased " + amount + " Bomb(s). Total cars: " + numCars);
         } else {
             System.out.println("You do not have enough money!");
         }
     }
 
-    private void purchaseHouse(int amount) {
+    private void purchaseScoutPlanes(int amount) {
         double cost = amount * 600000;
-        if (user.getBalance() >= cost) {
-            numHouses += amount;
-            assetValue += cost * 0.8;
-            user.setBalance(user.getBalance() - cost);
-            user.adjustHappinessForPurchase();
-            System.out.println("You purchased " + amount + " house(s). Total houses: " + numHouses);
+        if (Player.getBalance() >= cost) {
+            numScoutPlanes += amount;
+            System.out.println("You purchased " + amount + " Scout Plane(s). Total Scout Planes: " + numScoutPlanes);
         } else {
             System.out.println("You do not have enough money!");
         }
     }
 
-    private void purchaseMansion(int amount) {
+    private void purchaseRecallPanel(int amount) {
         double cost = amount * 2000000;
-        if (user.getBalance() >= cost) {
-            numMansions += amount;
-            assetValue += cost * 0.8;
-            user.setBalance(user.getBalance() - cost);
-            user.adjustHappinessForPurchase();
-            System.out.println("You purchased " + amount + " mansion(s). Total mansions: " + numMansions);
+        if (Player.getBalance() >= cost) {
+            numRecallPanels += amount;
+            System.out.println("You purchased " + amount + " Recall Panel(s). Total Recall Panels: " + numRecallPanels);
         } else {
             System.out.println("You do not have enough money!");
         }
     }
 
-    private void purchaseJet(int amount) {
+    private void purchaseExperimentalMode(int amount) {
         double cost = amount * 1500000;
-        if (user.getBalance() >= cost) {
-            numJets += amount;
-            assetValue += cost * 0.8;
-            user.setBalance(user.getBalance() - cost);
-            user.adjustHappinessForPurchase();
-            System.out.println("You purchased " + amount + " private jet(s). Total jets: " + numJets);
+        if (Player.getBalance() >= cost) {
+            purchasedExperimentalMode = true;
+            System.out.println("You purchased Experimental Mode! Have fun!");
         } else {
             System.out.println("You do not have enough money!");
         }
