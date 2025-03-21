@@ -46,7 +46,7 @@ public class GameBoard {
                 System.out.println("Right or Left:(R/L) ");
                 choice = scanner.nextLine().toUpperCase();
                 if (choice.equals())
-            }
+            };
         }
 
     }
