@@ -48,7 +48,6 @@ public class Shop extends Player{
         double cost = amount * 3;
         if (getPoints() >= cost) {
             numBombs += amount;
-
             System.out.println("You purchased " + amount + " Bomb(s). Total Bombs: " + numBombs);
         } else {
             System.out.println("You do not have enough money!");
@@ -76,7 +75,7 @@ public class Shop extends Player{
     }
 
     private void purchaseExperimentalMode(int amount) {
-        double cost = amount * 0;
+        double cost = 0;
         if (getPoints() >= cost) {
             numBombs += amount;
             if (amount > 1) {
