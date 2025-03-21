@@ -1,11 +1,10 @@
 public class Battleship extends Space {
-    private int shipPartsNum;
+    private final int shipPartsNum;
     private String size;
 
-    public Battleship (String symbol, int shipPartsNum, String size) {
+    public Battleship (String symbol, int shipPartsNum) {
         super(symbol);
         this.shipPartsNum = shipPartsNum;
-        this.size = size;
     }
 
     public int getShipPartsNum () {

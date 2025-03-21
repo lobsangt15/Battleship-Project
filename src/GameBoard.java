@@ -25,10 +25,30 @@ public class GameBoard {
 
     }
 
+    private void addHorizontal(Space shipType, int row, int col, int size, String direction) {
+        if (direction.equals("R")) {
+            if (col - size <= 0) {
+                System.out.println("You are going out of bounds!!!");
+            } else {
+                for (int i = 1; i < size; i++) {
+                    board[row][col - 1] = shipType;
+                }
+            }
+        }
+    }
+
     private void addBattleship(int row, int col) {
         if (!(board[row][col] instanceof Battleship)) {
-            board[row][col] == Battleship
+            board[row][col] = new Battleship("🚢",4);
+            System.out.print("Horizontally or Vertically:(H/V) ");
+            String choice = scanner.nextLine().toUpperCase();
+            if (choice.equals("H")) {
+                System.out.println("Right or Left:(R/L) ");
+                choice = scanner.nextLine().toUpperCase();
+                if (choice.equals())
+            }
         }
+
     }
 
     private void printBoard() {
