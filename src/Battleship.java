@@ -2,6 +2,7 @@ public class Battleship {
     private int shipPartsNum;
     private String size;
 
+
     public Battleship (int shipPartsNum, String size) {
         this.shipPartsNum = shipPartsNum;
         this.size = size;
@@ -14,4 +15,6 @@ public class Battleship {
     public String getSize () {
         return size;
     }
+
+
 }

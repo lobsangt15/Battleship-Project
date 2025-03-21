@@ -46,36 +46,59 @@ public class Shop extends Player{
 
     private void purchaseBomb(int amount) {
         double cost = amount * 3;
+        amountOfStock = 5;
+        System.out.println("There are " + amountOfStock + " Bomb(s) available for purchase, for 3 points.");
         if (getPoints() >= cost) {
             numBombs += amount;
             System.out.println("You purchased " + amount + " Bomb(s). Total Bombs: " + numBombs);
+            amountOfStock--;
         } else {
             System.out.println("You do not have enough money!");
+        }
+        if (amountOfStock < 1) {
+            System.out.println("Restocking immediately!");
+            amountOfStock++;
         }
     }
 
     private void purchaseScoutPlanes(int amount) {
         double cost = amount * 5;
+        amountOfStock = 3;
+        System.out.println("There are " + amountOfStock + " Scout Plane(s) available for purchase, for 5 points.");
         if (getPoints() >= cost) {
             numScoutPlanes += amount;
             System.out.println("You purchased " + amount + " Scout Plane(s). Total Scout Planes: " + numScoutPlanes);
+            amountOfStock--;
         } else {
             System.out.println("You do not have enough money!");
+        }
+        if (amountOfStock < 1) {
+            System.out.println("Restocking immediately!");
+            amountOfStock++;
         }
     }
 
     private void purchaseRecallPanel(int amount) {
         double cost = amount * 10;
+        amountOfStock = 2;
+        System.out.println("There are " + amountOfStock + " Recall Panel(s) available for purchase, for 10 points.");
         if (getPoints() >= cost) {
             numRecallPanels += amount;
             System.out.println("You purchased " + amount + " Recall Panel(s). Total Recall Panels: " + numRecallPanels);
+            amountOfStock--;
         } else {
             System.out.println("You do not have enough money!");
+        }
+        if (amountOfStock < 1) {
+            System.out.println("Restocking immediately!");
+            amountOfStock++;
         }
     }
 
     private void purchaseExperimentalMode(int amount) {
         double cost = 0;
+        amountOfStock = 1;
+        System.out.println("You can buy Experimental Mode here. It's a free gamemode in which you can toy around with the game and cheat your way to victory.");
         if (getPoints() >= cost) {
             numBombs += amount;
             if (amount > 1) {
@@ -83,6 +106,7 @@ public class Shop extends Player{
             } else {
                 if (getPoints() >= cost) {
                     System.out.println("You've purchased Experimental Mode.");
+                    amountOfStock--;
                 } else {
                     System.out.println("You do not have enough money");
                 }
