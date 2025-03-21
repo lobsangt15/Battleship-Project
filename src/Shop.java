@@ -15,10 +15,10 @@ public class Shop extends Player{
 
     public void purchaseMenu() {
         System.out.println("What would you like to purchase?");
-        System.out.println("(1) Bomb (consumable): 1 points");
-        System.out.println("(2) Scout Planes (consumable):  ");
-        System.out.println("(3) Recall Panel (consumable)");
-        System.out.println("(4) Experimental Mode (toggable): ");
+        System.out.println("(1) Bomb (consumable): 1 points.");
+        System.out.println("(2) Scout Planes (consumable): 5 points.");
+        System.out.println("(3) Recall Panel (consumable): 10 points.");
+        System.out.println("(4) Experimental Mode (toggable): 0 points.");
         System.out.println();
         System.out.println("Enter your choice: ");
         int choice = scan.nextInt();
@@ -76,12 +76,18 @@ public class Shop extends Player{
     }
 
     private void purchaseExperimentalMode(int amount) {
-        double cost = amount * 2;
+        double cost = amount * 0;
         if (getPoints() >= cost) {
-            purchasedExperimentalMode = true;
-            System.out.println("You purchased Experimental Mode! Have fun!");
-        } else {
-            System.out.println("You do not have enough money!");
+            numBombs += amount;
+            if (amount > 1) {
+                System.out.println("You have already bought Experimental Mode.");
+            } else {
+                if (getPoints() >= cost) {
+                    System.out.println("You've purchased Experimental Mode.");
+                } else {
+                    System.out.println("You do not have enough money");
+                }
+            }
         }
     }
 }
