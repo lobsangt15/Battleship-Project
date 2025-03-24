@@ -39,19 +39,18 @@ public class GameBoard {
 
     private void addBattleship(int row, int col) {
         if (!(board[row][col] instanceof Battleship)) {
-            board[row][col] = new Battleship("🚢",4);
+            board[row][col] = new Battleship("🚢", 4);
             System.out.print("Horizontally or Vertically:(H/V) ");
             String choice = scanner.nextLine().toUpperCase();
             if (choice.equals("H")) {
                 System.out.println("Right or Left: (R/L) ");
                 choice = scanner.nextLine().toUpperCase();
-            if (choice.equals("V")) {
-                System.out.println("Up or Down: (U/D");
-                choice = scanner.nextLine().toUpperCase();
-            }
+                if (choice.equals("V")) {
+                    System.out.println("Up or Down: (U/D");
+                    choice = scanner.nextLine().toUpperCase();
+                }
             }
         }
-
     }
 
     private void printBoard() {

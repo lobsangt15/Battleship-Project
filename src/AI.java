@@ -7,6 +7,15 @@ public class AI {
         this.board = board;
         this.Random = Random;
     }
+
+    public int[][] getBoard() {
+        return board;
+    }
+
+    public int[][] getRandom() {
+        return Random;
+    }
+
     public int makeMoves() {
         int x = 0;
         int y = 0;
@@ -19,9 +28,14 @@ public class AI {
                 x = (int) Math.floor(Math.random() * 11);
                 y = (int) Math.floor(Math.random() * 11);
             }
-            if (board[x][y] = hit) {
+            // fix later please chase!!!
+            if (AITURN = true) {
+                if ()
                 turns++;
 
+            } else {
+                while (AITURN = false)
+                turns = 0;
             }
         }
         return x;
