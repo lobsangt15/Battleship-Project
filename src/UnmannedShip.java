@@ -1,8 +1,8 @@
 public class UnmannedShip extends Battleship{
     public boolean hasRecallPanel;
 
-    public UnmannedShip (int shipPartsNum, String size, boolean hasRecallPanel) {
-        super(shipPartsNum, size);
+    public UnmannedShip (String symbol, int shipPartsNum, boolean hasRecallPanel) {
+        super(symbol, shipPartsNum);
         hasRecallPanel = true;
     }
 

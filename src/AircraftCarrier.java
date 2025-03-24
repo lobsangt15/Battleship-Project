@@ -1,7 +1,7 @@
 public class AircraftCarrier extends Battleship {
     private boolean hasScoutPlanes;
-    public AircraftCarrier (int shipPartsNum, String size, boolean hasScoutPlanes) {
-        super(shipPartsNum, size);
+    public AircraftCarrier (String symbol, int shipPartsNum, boolean hasScoutPlanes) {
+        super(symbol, shipPartsNum);
         hasScoutPlanes = true;
     }
 

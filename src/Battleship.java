@@ -1,7 +1,5 @@
 public class Battleship extends Space {
     private final int shipPartsNum;
-    private String size;
-
     public Battleship (String symbol, int shipPartsNum) {
         super(symbol);
         this.shipPartsNum = shipPartsNum;
@@ -11,7 +9,4 @@ public class Battleship extends Space {
         return shipPartsNum;
     }
 
-    public String getSize () {
-        return size;
-    }
 }

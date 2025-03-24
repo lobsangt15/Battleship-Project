@@ -43,10 +43,13 @@ public class GameBoard {
             System.out.print("Horizontally or Vertically:(H/V) ");
             String choice = scanner.nextLine().toUpperCase();
             if (choice.equals("H")) {
-                System.out.println("Right or Left:(R/L) ");
+                System.out.println("Right or Left: (R/L) ");
                 choice = scanner.nextLine().toUpperCase();
-                if (choice.equals())
-            };
+            if (choice.equals("V")) {
+                System.out.println("Up or Down: (U/D");
+                choice = scanner.nextLine().toUpperCase();
+            }
+            }
         }
 
     }
