@@ -22,6 +22,11 @@ public class AI {
         boolean hit = false;
         int turns = 1;
         boolean AITURN = false;
+        if (AITURN) {
+            turns++;
+        } else {
+            turns = 0;
+        }
 //plan : if the hit hits battleship, set to true and give another turn, to make ai smart either + 1 the column or -1 or +1 row
         for (int r = 0; r < board.length; r++) {
             for (int c = 0; c < board[0].length; c++) {
@@ -33,14 +38,10 @@ public class AI {
                 hit = true;
                 System.out.println("The AI has hit your ship. He gets an extra turn!");
                 AITURN = true;
-                turns++;
             } else {
                 AITURN = false;
                 System.out.println("The AI has missed!");
             }
-        }
-        if (AITURN = false) {
-            turns = 0;
         }
         return turns;
     }
