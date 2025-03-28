@@ -63,7 +63,40 @@ public class GameBoard {
     }
 
     private void play() {
-        while ()
-    }
+        boolean gamePlaying = true;
+        if (!gamePlaying) {
+            System.out.println("Game Over..."); // temporary until we make a way to restart the game. If added, replace the message with "Game Over... try again?"
+            System.exit(0);
+        }
+        System.out.println("Get ready, Player 1! The game is starting!");
+        printBoard();
+        while (gamePlaying) {
+            System.out.println("Enter which row you'd like to attack (1-9)");
+            int row = scanner.nextInt();
+            System.out.println("Enter which column you'd like to attack (1-9)");
+            int column = scanner.nextInt();
 
+            if (row < 1 || column >= 10 || column < 1 || column >= 10) {
+                System.out.println("Invalid coordinates. Try Again");
+                // add way to make it repeat and go back to asking coordinates for row and column
+            }
+            Space locationChosen = board[row][column];
+            Battleship battleship = (Battleship) locationChosen;
+            if (locationChosen instanceof Battleship) {
+                battleship.hit();
+                System.out.println("You've hit something. Let's see if it was a good hit.");
+                board[row][column] = new Space("X");
+                printBoard();
+            } else {
+                System.out.println("You've missed, unfortunately...");
+                board[row][column] = new Space("O");
+                printBoard();
+            }
+            if (battleship.isSunk()) {
+                System.out.println("You've sunk all the opponent's battleships");
+                printBoard();
+                gamePlaying = false;
+            }
+        }
+    }
 }

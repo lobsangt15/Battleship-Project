@@ -29,16 +29,19 @@ public class AI {
                 y = (int) Math.floor(Math.random() * 11);
             }
             // fix later please chase!!!
-            if (AITURN = true) {
-                if ()
+            if (board[x][y] == 1) {
+                hit = true;
+                System.out.println("The AI has hit your ship. He gets an extra turn!");
+                AITURN = true;
                 turns++;
-
             } else {
-                while (AITURN = false)
-                turns = 0;
+                AITURN = false;
+                System.out.println("The AI has missed!");
             }
         }
-        return x;
+        if (AITURN = false) {
+            turns = 0;
+        }
+        return turns;
     }
-
 }
