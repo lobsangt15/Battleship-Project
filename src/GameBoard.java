@@ -11,17 +11,16 @@ public class GameBoard {
         play();
     }
 
-    private void setupBoard() {
+    public void setupBoard() {
         board = new Space[10][10];
         for (int r = 0; r < board.length; r++) {
             for (int c = 0; c < board[r].length; c++) {
                 if (board[r][c] == null) {
-                    board[r][c] = new Space(" ");
+                    board[r][c] = new Space("☐");
                 }
+                board[2][3] = new Battleship("⛴", 4);
             }
         }
-        int row = (int) (Math.random() * 10);
-        int col = (int) (Math.random() * 10);
 
     }
 
