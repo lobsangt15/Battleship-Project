@@ -17,32 +17,25 @@ public class AI {
     }
 
     public int makeMoves() {
-        int x = 0;
-        int y = 0;
-        boolean hit = false;
-        int turns = 1;
-        boolean AITURN = false;
-        if (AITURN) {
-            turns++;
-        } else {
-            turns = 0;
-        }
-//plan : if the hit hits battleship, set to true and give another turn, to make ai smart either + 1 the column or -1 or +1 row
-        for (int r = 0; r < board.length; r++) {
-            for (int c = 0; c < board[0].length; c++) {
-                x = (int) (Math.random() * 10);
-                y = (int) (Math.random() * 10);
-            }
-            // fix later please chase!!!
+        int turns = 0;
+        boolean AITURN = true;
+
+        while (AITURN) {
+            int x = (int) (Math.random() * 10);
+            int y = (int) (Math.random() * 10);
+
             if (board[x][y] == 1) {
-                hit = true;
-                System.out.println("The AI has hit your ship. He gets an extra turn!");
-                AITURN = true;
-            } else {
+                System.out.println("The AI has hit your ship at coordinates X: " + x + ", Y: " + y + ".");
+                board[x][y] = -1;
+                turns++;
+
+            } else if (board[x][y] == -1){
+                System.out.println("The AI missed your ship!");
+                board[x][y] = 0;
                 AITURN = false;
-                System.out.println("The AI has missed!");
             }
         }
         return turns;
     }
 }
+
