@@ -1,9 +1,15 @@
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class GameBoard {
-    private Space [][] board;
+    private Space [][] AIboard;
+    private Space [][] PlayerBoard;
     private Player player;
     private Scanner scanner;
+    ArrayList<int[]> presetCoord = new ArrayList<>();
 
     public GameBoard() {
         scanner = new Scanner(System.in);
@@ -11,14 +17,19 @@ public class GameBoard {
         play();
     }
 
+    private void setPresetCoord() {
+        presetCoord.add(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
+
+    }
     public void setupBoard() {
-        board = new Space[10][10];
-        for (int r = 0; r < board.length; r++) {
-            for (int c = 0; c < board[r].length; c++) {
-                if (board[r][c] == null) {
-                    board[r][c] = new Space("☐");
+        AIboard = new Space[10][10];
+        for (int r = 0; r < AIboard.length; r++) {
+            for (int c = 0; c < AIboard[r].length; c++) {
+                if (AIboard[r][c] == null) {
+                    AIboard[r][c] = new Space("☐");
                 }
-                board[2][3] = new Battleship("⛴", 4);
+                AIboard[2][3] = new Battleship("⛴", 4);
+
             }
         }
 
@@ -30,15 +41,15 @@ public class GameBoard {
                 System.out.println("You are going out of bounds!!!");
             } else {
                 for (int i = 1; i < size; i++) {
-                    board[row][col - 1] = shipType;
+                    AIboard[row][col - 1] = shipType;
                 }
             }
         }
     }
 
     private void addBattleship(int row, int col) {
-        if (!(board[row][col] instanceof Battleship)) {
-            board[row][col] = new Battleship("🚢", 4);
+        if (!(AIboard[row][col] instanceof Battleship)) {
+            AIboard[row][col] = new Battleship("🚢", 4);
             System.out.print("Horizontally or Vertically:(H/V) ");
             String choice = scanner.nextLine().toUpperCase();
             if (choice.equals("H")) {
@@ -53,7 +64,7 @@ public class GameBoard {
     }
 
     private void printBoard() {
-        for (Space[] row : board) {
+        for (Space[] row : AIboard) {
             for (Space element : row) {
                 System.out.print(element.getSymbol());
             }
@@ -79,16 +90,16 @@ public class GameBoard {
                 System.out.println("Invalid coordinates. Try Again");
                 // add way to make it repeat and go back to asking coordinates for row and column
             }
-            Space locationChosen = board[row][column];
+            Space locationChosen = AIboard[row][column];
             Battleship battleship = (Battleship) locationChosen;
             if (locationChosen instanceof Battleship) {
                 battleship.hit();
                 System.out.println("You've hit something. Let's see if it was a good hit.");
-                board[row][column] = new Space("X");
+                AIboard[row][column] = new Space("X");
                 printBoard();
             } else {
                 System.out.println("You've missed, unfortunately...");
-                board[row][column] = new Space("O");
+                AIboard[row][column] = new Space("O");
                 printBoard();
             }
             if (battleship.isSunk()) {
