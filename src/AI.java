@@ -4,8 +4,8 @@ public class AI {
     private int[][] board;
     private int[][] Random;
     public AI() {
-        this.board = board;
-        this.Random = Random;
+    this.board = board;
+    this.Random = Random;
     }
 
     public int[][] getBoard() {
