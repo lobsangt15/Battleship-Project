@@ -70,9 +70,9 @@ public class GameBoard {
         System.out.println("Get ready, Player 1! The game is starting!");
         printBoard();
         while (gamePlaying) {
-            System.out.println("Enter which row you'd like to attack (1-9)");
+            System.out.println("Enter which row you'd like to attack (0-9)");
             int row = scanner.nextInt();
-            System.out.println("Enter which column you'd like to attack (1-9)");
+            System.out.println("Enter which column you'd like to attack (0-9)");
             int column = scanner.nextInt();
 
             if (row < 1 || row > 9 || column < 1 || column > 9) {
