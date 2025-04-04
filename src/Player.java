@@ -7,7 +7,7 @@ public class Player extends Space {
     Scanner scanner = new Scanner(System.in);
 
     public Player(String name, int points, int score, int moves) {
-        super(name.substring(0, 1));
+        super(name.substring(0, 1), shipPartsNum);
         score = 0;
         moves = 0;
         points = 0;

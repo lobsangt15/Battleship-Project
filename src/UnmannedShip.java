@@ -1,4 +1,4 @@
-public class UnmannedShip extends Battleship{
+public class UnmannedShip extends Space{
     public boolean hasRecallPanel;
 
     public UnmannedShip (String symbol, int shipPartsNum, boolean hasRecallPanel) {

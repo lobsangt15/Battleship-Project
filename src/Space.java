@@ -1,7 +1,7 @@
 public class Space {
     private String symbol;
 
-    public Space(String symbol) {
+    public Space(String symbol, int shipPartsNum) {
         this.symbol = symbol;
     }
 

@@ -1,34 +1,117 @@
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class GameBoard {
     private Space [][] AIboard;
     private Space [][] PlayerBoard;
     private Player player;
     private Scanner scanner;
-    ArrayList<int[]> presetCoord = new ArrayList<>();
+
 
     public GameBoard() {
         scanner = new Scanner(System.in);
-        setupBoard();
+        setupAIBoard();
         play();
     }
 
-    private void setPresetCoord() {
-        presetCoord.add(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1});
-
+    public void setupHorizontly(Space shipType, Space[][] board, int startRow, int startCol, int shipSize, String direction) {
+        String symbol = "";
+        if (board == AIboard) {
+            symbol = "☐";
+        } else {
+            if (shipType instanceof Battleship) {
+                symbol = "⛴";
+            } else if (shipType instanceof AircraftCarrier) {
+                symbol = "🛳";
+            } else if (shipType instanceof UnmannedShip) {
+                symbol = "⛵";
+            } else {
+                symbol =
+            }
+        }
+        if (direction.equals("R")) {
+            if (startCol + shipSize > 10) {
+                System.out.println("Your ship is going out of bounds, choose another coordinate!");
+                return;
+            }
+            for (int i = 0; i < shipSize; i++) {
+                switch (shipType) {
+                    case Battleship battleship -> board[startRow][startCol + i] = new Battleship(symbol, 4);
+                    case AircraftCarrier aircraftCarrier -> board[startRow][startCol + i] = new AircraftCarrier(symbol, 6, true);
+                    case UnmannedShip unmannedShip -> board[startRow][startCol + i] = new UnmannedShip(symbol, 2, false);
+                    case null, default -> board[startRow][startCol + i] = new Battleship(symbol, 3);
+                }
+            }
+        } else {
+            if (startCol - shipSize < 0) {
+                System.out.println("Your ship is going out of bounds, choose another coordinate!");
+                return;
+            }
+            for (int i = 0; i < shipSize; i++) {
+                switch (shipType) {
+                    case Battleship battleship -> board[startRow][startCol - i] = new Battleship(symbol, 4);
+                    case AircraftCarrier aircraftCarrier -> board[startRow][startCol - i] = new AircraftCarrier(symbol, 6, true);
+                    case UnmannedShip unmannedShip -> board[startRow][startCol - i] = new UnmannedShip(symbol, 2, false);
+                    //change to sub//
+                    case null, default -> board[startRow][startCol - i] = new Battleship(symbol, 3);
+                }
+            }
+        }
     }
-    public void setupBoard() {
+
+    public void setupVertically(Space shipType, Space[][] board, int startRow, int startCol, int shipSize, String direction) {
+        String symbol = "";
+        if (board == AIboard) {
+            symbol = "☐";
+        } else {
+            if (shipType instanceof Battleship) {
+                symbol = "⛴";
+            } else if (shipType instanceof AircraftCarrier) {
+                symbol = "🛳";
+            } else if (shipType instanceof UnmannedShip) {
+                symbol = "⛵";
+            } else {
+                symbol =
+            }
+        }
+        if (direction.equals("U")) {
+            if (startRow + shipSize > 10) {
+                System.out.println("Your ship is going out of bounds, choose another coordinate!");
+                return;
+            }
+            for (int i = 0; i < shipSize; i++) {
+                switch (shipType) {
+                    case Battleship battleship -> board[startRow + i][startCol] = new Battleship(symbol, 4);
+                    case AircraftCarrier aircraftCarrier -> board[startRow + i][startCol] = new AircraftCarrier(symbol, 6, true);
+                    case UnmannedShip unmannedShip -> board[startRow + i][startCol] = new UnmannedShip(symbol, 2, false);
+                    case null, default -> board[startRow + i][startCol] = new Battleship(symbol, 3);
+                }
+            }
+        } else {
+            if (startCol - shipSize < 0) {
+                System.out.println("Your ship is going out of bounds, choose another coordinate!");
+                return;
+            }
+            for (int i = 0; i < shipSize; i++) {
+                switch (shipType) {
+                    case Battleship battleship -> board[startRow - i][startCol] = new Battleship(symbol, 4);
+                    case AircraftCarrier aircraftCarrier -> board[startRow - i][startCol] = new AircraftCarrier(symbol, 6, true);
+                    case UnmannedShip unmannedShip -> board[startRow - i][startCol] = new UnmannedShip(symbol, 2, false);
+                    case null, default -> board[startRow - i][startCol] = new Battleship(symbol, 3);
+                }
+            }
+        }
+    }
+
+    public void setupAIBoard() {
         AIboard = new Space[10][10];
         for (int r = 0; r < AIboard.length; r++) {
             for (int c = 0; c < AIboard[r].length; c++) {
                 if (AIboard[r][c] == null) {
-                    AIboard[r][c] = new Space("☐");
+                    AIboard[r][c] = new Space("☐", 0);
                 }
-                AIboard[2][3] = new Battleship("⛴", 4);
+                int randomPreset = (int)(Math.random() * 10) + 1;
+                Space Battleship = new Battleship("⛴", 4);
+                setupHorizontly(Battleship, AIboard, 2, 4, 4, "R");
 
             }
         }
@@ -95,11 +178,11 @@ public class GameBoard {
             if (locationChosen instanceof Battleship) {
                 battleship.hit();
                 System.out.println("You've hit something. Let's see if it was a good hit.");
-                AIboard[row][column] = new Space("X");
+                AIboard[row][column] = new Space("X", shipPartsNum);
                 printBoard();
             } else {
                 System.out.println("You've missed, unfortunately...");
-                AIboard[row][column] = new Space("O");
+                AIboard[row][column] = new Space("O", shipPartsNum);
                 printBoard();
             }
             if (battleship.isSunk()) {
