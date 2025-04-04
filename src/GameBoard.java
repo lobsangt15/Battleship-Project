@@ -86,7 +86,7 @@ public class GameBoard {
             System.out.println("Enter which column you'd like to attack (0-9)");
             int column = scanner.nextInt();
 
-            if (row < 1 || row > 10 || column < 1 || column > 10) {
+            if (row < 0 || row > 9 || column < 0 || column > 9) {
                 System.out.println("Invalid coordinates. Try Again");
                 // add way to make it repeat and go back to asking coordinates for row and column
             }
@@ -103,7 +103,7 @@ public class GameBoard {
                 printBoard();
             }
             if (battleship.isSunk()) {
-                System.out.println("You've sunk all the opponent's battleships");
+                System.out.println("You've sunk all the opponent's battleships!");
                 printBoard();
                 gamePlaying = false;
             }

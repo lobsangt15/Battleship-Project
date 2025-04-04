@@ -53,14 +53,14 @@ public class Player extends Space {
 
     public void PlayerMove(Space[] board) {
         System.out.println("It's now your turn, " + name + ".");
-        int row = -1;
-        int column = -1;
+        int row;
+        int column;
         while (true) {
-            System.out.println("Enter which row (0-9");
+            System.out.println("Enter which row (0-9)");
             row = scanner.nextInt();
-            System.out.println("Enter which column (0-9");
+            System.out.println("Enter which column (0-9)");
             column = scanner.nextInt();
-            if (row < 1 || row > 10 || column < 1 || column > 10) {
+            if (row < 0 || row > 9 || column < 0 || column > 9) {
                 System.out.println("Invalid coordinates. Try Again");
             }
         }
