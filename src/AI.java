@@ -30,7 +30,7 @@ public class AI {
                 turns++;
 
             } else if (board[x][y] == -1){
-                System.out.println("The AI missed your ship!");
+                System.out.println("The AI missed your ship! Turn over.");
                 board[x][y] = 0;
                 AITURN = false;
             }
