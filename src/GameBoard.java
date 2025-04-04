@@ -78,7 +78,7 @@ public class GameBoard {
             System.out.println("Game Over..."); // temporary until we make a way to restart the game. If added, replace the message with "Game Over... try again?"
             System.exit(0);
         }
-        System.out.println("Get ready, Player 1! The game is starting!");
+        System.out.println("Get ready, " + player.getName() + ". The game is starting!");
         printBoard();
         while (gamePlaying) {
             System.out.println("Enter which row you'd like to attack (0-9)");
