@@ -8,7 +8,7 @@ public class Shop extends Player{
     private int numRecallPanels;
     private boolean purchasedExperimentalMode;
     Scanner scan = new Scanner(System.in);
-    Player player = new Player(getName(), getPoints(), getScore(), getMoves());
+
 
     public Shop(String name, int points, int score, int moves) {
         super(name, points, score, moves);
@@ -54,8 +54,8 @@ public class Shop extends Player{
             numBombs += amount;
             System.out.println("You purchased " + amount + " Bomb(s). Total Bombs: " + numBombs);
             amountOfStock--;
-            player.usePoints(cost);
-            System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
+            usePoints(cost);
+            System.out.println(getName() + " now has " + getPoints() + " points.");
         } else {
             System.out.println("You do not have enough money!");
         }
@@ -73,8 +73,8 @@ public class Shop extends Player{
             numScoutPlanes += amount;
             System.out.println("You purchased " + amount + " Scout Plane(s). Total Scout Planes: " + numScoutPlanes);
             amountOfStock--;
-            player.usePoints(amount);
-            System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
+            usePoints(cost);
+            System.out.println(getName() + " now has " + getPoints() + " points.");
         } else {
             System.out.println("You do not have enough money!");
         }
@@ -92,8 +92,8 @@ public class Shop extends Player{
             numRecallPanels += amount;
             System.out.println("You purchased " + amount + " Recall Panel(s). Total Recall Panels: " + numRecallPanels);
             amountOfStock--;
-            player.usePoints(amount);
-            System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
+            usePoints(cost);
+            System.out.println(getName() + " now has " + getPoints() + " points.");
         } else {
             System.out.println("You do not have enough money!");
         }
@@ -113,9 +113,8 @@ public class Shop extends Player{
                 if (getPoints() >= cost) {
                     System.out.println("You've purchased Experimental Mode.");
                     amountOfStock--;
-                    player.usePoints(amount);
-                    System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
-
+                    usePoints(cost);
+                    System.out.println(getName() + " now has " + getPoints() + " points.");
                 } else {
                     System.out.println("You do not have enough money");
                 }
