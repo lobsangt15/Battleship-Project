@@ -217,4 +217,25 @@ public class Player {
             }
         }
     }
+
+    public void useExperimentalMode(Space[][] opponentsBoard) {
+        points = 999999999;
+        for (int r = 0; r < opponentsBoard.length; r++) {
+            for (int c = 0; c < opponentsBoard[r].length; c++) {
+                Space target = opponentsBoard[r][c];
+                if (target instanceof Destroyer) {
+                    target = new Destroyer("⛴", 4);
+                }
+                if (target instanceof AircraftCarrier) {
+                    target = new AircraftCarrier("🛳", 6, false);
+                }
+                if (target instanceof Submarine) {
+                    target = new Submarine("🚢", 3, false);
+                }
+                if (target instanceof Frigate) {
+                    target = new Frigate("⛵", 2);
+                }
+            }
+        }
+    }
 }

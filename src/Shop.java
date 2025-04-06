@@ -105,8 +105,7 @@ public class Shop {
                     amountOfStock--;
                     player.usePoints(cost);
                     System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
-                } else {
-                    System.out.println("You do not have enough money");
+                    player.addToInventory("Experimental Mode");
                 }
             }
         }
