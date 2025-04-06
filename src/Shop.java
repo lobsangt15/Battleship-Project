@@ -1,23 +1,24 @@
 import java.util.Scanner;
 
-public class Shop extends Player{
+public class Shop {
     private int priceOfItem;
     private int amountOfStock;
     private int numBombs;
     private int numScoutPlanes;
     private int numRecallPanels;
     private boolean purchasedExperimentalMode;
+    private final Player player;
     Scanner scan = new Scanner(System.in);
 
 
-    public Shop(String name, int points, int score, int moves) {
-        super(name, points, score, moves);
 
+    public Shop(Player player) {
+        this.player = player;
     }
 
     public void purchaseMenu() {
         System.out.println("What would you like to purchase?");
-        System.out.println("(1) Bomb (consumable): 1 points.");
+        System.out.println("(1) Torpedo (consumable): 3 points.");
         System.out.println("(2) Scout Planes (consumable): 5 points.");
         System.out.println("(3) Recall Panel (consumable): 10 points.");
         System.out.println("(4) Experimental Mode (toggable): 0 points.");
@@ -30,7 +31,7 @@ public class Shop extends Player{
 
         switch (choice) {
             case 1:
-                purchaseBomb(amount);
+                purchaseTorpedo(amount);
                 break;
             case 2:
                 purchaseScoutPlanes(amount);
@@ -46,41 +47,53 @@ public class Shop extends Player{
         }
     }
 
-    private void purchaseBomb(int amount) {
-        int cost = amount * 3;
-        amountOfStock = 5;
-        System.out.println("There are " + amountOfStock + " Bomb(s) available for purchase, for 3 points.");
-        if (getPoints() >= cost) {
-            numBombs += amount;
-            System.out.println("You purchased " + amount + " Bomb(s). Total Bombs: " + numBombs);
-            amountOfStock--;
-            usePoints(cost);
-            System.out.println(getName() + " now has " + getPoints() + " points.");
-        } else {
-            System.out.println("You do not have enough money!");
-        }
-        if (amountOfStock < 1) {
-            System.out.println("Restocking immediately!");
-            amountOfStock++;
+    private void purchaseTorpedo(int amount) {
+        System.out.println("Your submarine must still be alive to use this item!, is your submarine alive?(Y/N): ");
+        scan.nextLine();
+        String answer = scan.nextLine().toUpperCase();
+        if (answer.equals("Y")) {
+            int cost = amount * 3;
+            amountOfStock = 5;
+            System.out.println("There are " + amountOfStock + " Torpedo(s) available for purchase, for 3 points.");
+            if (player.getPoints() >= cost) {
+                numBombs += amount;
+                System.out.println("You purchased " + amount + " Torpedo(s). Total Torpedo's: " + numBombs);
+                amountOfStock--;
+                player.usePoints(cost);
+                System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
+                player.addToInventory("Torpedo");
+            } else {
+                System.out.println("You do not have enough money!");
+            }
+            if (amountOfStock < 1) {
+                System.out.println("Restocking immediately!");
+                amountOfStock++;
+            }
         }
     }
 
     private void purchaseScoutPlanes(int amount) {
-        int cost = amount * 5;
-        amountOfStock = 3;
-        System.out.println("There are " + amountOfStock + " Scout Plane(s) available for purchase, for 5 points.");
-        if (getPoints() >= cost) {
-            numScoutPlanes += amount;
-            System.out.println("You purchased " + amount + " Scout Plane(s). Total Scout Planes: " + numScoutPlanes);
-            amountOfStock--;
-            usePoints(cost);
-            System.out.println(getName() + " now has " + getPoints() + " points.");
-        } else {
-            System.out.println("You do not have enough money!");
-        }
-        if (amountOfStock < 1) {
-            System.out.println("Restocking immediately!");
-            amountOfStock++;
+        System.out.println("Your Aircraft Carrier must be still alive to use this!, is your Aircraft carrier still alive?(Y/N): ");
+        scan.nextLine();
+        String answer = scan.nextLine().toUpperCase();
+        if (answer.equals("Y")) {
+            int cost = amount * 5;
+            amountOfStock = 3;
+            System.out.println("There are " + amountOfStock + " Scout Plane(s) available for purchase, for 5 points.");
+            if (player.getPoints() >= cost) {
+                numScoutPlanes += amount;
+                System.out.println("You purchased " + amount + " Scout Plane(s). Total Scout Planes: " + numScoutPlanes);
+                amountOfStock--;
+                player.usePoints(cost);
+                System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
+                player.addToInventory("Scout Plane");
+            } else {
+                System.out.println("You do not have enough money!");
+            }
+            if (amountOfStock < 1) {
+                System.out.println("Restocking immediately!");
+                amountOfStock++;
+            }
         }
     }
 
@@ -88,12 +101,12 @@ public class Shop extends Player{
         int cost = amount * 10;
         amountOfStock = 2;
         System.out.println("There are " + amountOfStock + " Recall Panel(s) available for purchase, for 10 points.");
-        if (getPoints() >= cost) {
+        if (player.getPoints() >= cost) {
             numRecallPanels += amount;
             System.out.println("You purchased " + amount + " Recall Panel(s). Total Recall Panels: " + numRecallPanels);
             amountOfStock--;
-            usePoints(cost);
-            System.out.println(getName() + " now has " + getPoints() + " points.");
+            player.usePoints(cost);
+            System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
         } else {
             System.out.println("You do not have enough money!");
         }
@@ -110,11 +123,11 @@ public class Shop extends Player{
             if (amount > 1) {
                 System.out.println("You have already bought Experimental Mode.");
             } else {
-                if (getPoints() >= cost) {
+                if (player.getPoints() >= cost) {
                     System.out.println("You've purchased Experimental Mode.");
                     amountOfStock--;
-                    usePoints(cost);
-                    System.out.println(getName() + " now has " + getPoints() + " points.");
+                    player.usePoints(cost);
+                    System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
                 } else {
                     System.out.println("You do not have enough money");
                 }

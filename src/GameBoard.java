@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class GameBoard {
@@ -7,6 +8,7 @@ public class GameBoard {
     private Scanner scan;
     private AI ai;
     private Player player1;
+    private Shop shop;
     boolean experimentalModeUnlocked = false;
     boolean running = true;
     boolean experimentalModeActive = false;
@@ -18,6 +20,7 @@ public class GameBoard {
         System.out.println("What is your name: ");
         String name = scan.nextLine();
         player1 = new Player(name, 10, 0, 0);
+        shop = new Shop(player1);
         setupAIBoard();
         setUpPlayerBoard();
         System.out.println("Opponents Board: ");
@@ -307,10 +310,27 @@ public class GameBoard {
             String input = scan.nextLine();
             if (input.equals("1")) {
                 play();
+            } else if (input.equals("2")) {
+                if (player1.getInventory() == null) {
+                    System.out.println("You don't own any items!");
+                } else {
+                    player1.printInventory();
+                    System.out.println("Which item would you like to use:(Input item idx:)");
+                    int itemNum = scan.nextInt();
+                    if (player1.getInventory().get(itemNum).equals("Torpedo")) {
+                        player1.useBomb();
+                    } else if (player1.getInventory().get(itemNum).equals("Scout Plane")) {
+                        player1.useScoutPlane(PlayerBoard, AIboard);
+                    }
+                    System.out.println("Opponents Board: ");
+                    printAIBoard();
+                }
             } else if (input.equals("3")) {
+                shop.purchaseMenu();
                 System.out.println("\n Shop");
                 System.out.println("1. Unlock Experimental Mode (free)");
-                System.out.println("2. Return to Main Menu");
+                System.out.println("2. Keep shopping");
+                System.out.println("3. Return to Main Menu");
                 String shopInput = scan.nextLine();
                 if (shopInput.equals("1")) {
                     if (!experimentalModeUnlocked) {
@@ -320,6 +340,8 @@ public class GameBoard {
                         System.out.println("You've already unlocked it.");
                     }
                 } else if (shopInput.equals("2")) {
+                    shop.purchaseMenu();
+                } else if (shopInput.equals("3")) {
                     System.out.println("Returning to main menu...");
                 } else {
                     System.out.println("Invalid choice.");
