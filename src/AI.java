@@ -1,38 +1,67 @@
+import java.util.Scanner;
+
 public class AI {
-    private int[][] board;
-    private int[][] Random;
+    private Space[][] AIboard;
+    private Player player;
+    private Scanner scanner;
 
-    public AI() {
-        this.board = new int[10][10];
-        this.Random = new int[10][10];
+    public AI () {
+        scanner = new Scanner(System.in);
+        setupAIBoard();
+        play();
     }
 
-    public int[][] getBoard() {
-        return board;
-    }
-
-    public int[][] getRandom() {
-        return Random;
-    }
-
-    public int makeMoves() {
-        int turns = 0;
-        boolean AITURN = true;
-
-        while (AITURN) {
-            int x = (int) (Math.random() * 10);
-            int y = (int) (Math.random() * 10);
-
-            if (board[x][y] == 1) {
-                System.out.println("The AI has hit your ship at X: " + x + ", Y: " + y + ".");
-                board[x][y] = -1;
-                turns++;
-            } else if (board[x][y] == -1) {
-                System.out.println("The AI missed your ship! ");
-                board[x][y] = 0;
-                AITURN = false;
+    public void setupAIBoard() {
+        AIboard = new Space[10][10];
+        for (int r = 0; r < AIboard.length; r++) {
+            for (int c = 0; c < AIboard[r].length; c++) {
+                if (AIboard[r][c] == null) {
+                    AIboard[r][c] = new Space("☐", 0);
+                }
             }
         }
-        return turns;
+    }
+
+    public void printBoard() {
+        for (Space[] row : AIboard) {
+            for (Space element : row) {
+                System.out.print(element.getSymbol());
+            }
+            System.out.println();
+        }
+    }
+
+    private void play() {
+        boolean gamePlaying = true;
+        player = new Player("Player", 0, 0, 0);
+
+        System.out.println("Get ready, " + player.getName() + ". The game is starting!");
+        printBoard();
+
+        while (gamePlaying) {
+            System.out.println("Enter which row you'd like to attack (0-9): ");
+            int row = scanner.nextInt();
+            System.out.println("Enter which column you'd like to attack (0-9): ");
+            int column = scanner.nextInt();
+
+            if (row < 0 || row > 9  || column < 0  || column > 9) {
+                System.out.println("Invalid coordinates.");
+                continue;
+            }
+
+            Space target = AIboard[row][column];
+
+            if (target instanceof Battleship || target instanceof AircraftCarrier || target instanceof UnmannedShip) {
+                System.out.println("Hit!");
+            } else {
+                System.out.println("Miss!");
+            }
+
+            printBoard();
+
+            gamePlaying = false;
+        }
+
+        System.out.println("Game Over!");
     }
 }
