@@ -17,8 +17,7 @@ public class Main {
             System.out.print("Choose: ");
             String input = scanner.nextLine();
             if (input.equals("1")) {
-                GameBoard game = new GameBoard(player);
-                game.play();
+                GameBoard game = new GameBoard();
             }
             else if (input.equals("2")) {
                 System.out.println("\n Shop");

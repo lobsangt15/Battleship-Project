@@ -1,11 +1,13 @@
-public class UnmannedShip extends Space {
+public class Destroyer extends Space {
     private int shipPartsNum;
-    private boolean hasRecallPanel;
 
-    public UnmannedShip(String symbol, int shipPartsNum, boolean hasRecallPanel) {
+    public Destroyer(String symbol, int shipPartsNum) {
         super(symbol, shipPartsNum);
         this.shipPartsNum = shipPartsNum;
-        this.hasRecallPanel = hasRecallPanel;
+    }
+
+    public int getShipPartsNum() {
+        return shipPartsNum;
     }
 
     public void hit() {
