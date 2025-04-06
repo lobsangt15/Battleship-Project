@@ -1,11 +1,10 @@
-import java.util.Random;
 public class AI {
-
     private int[][] board;
     private int[][] Random;
+
     public AI() {
-    this.board = board;
-    this.Random = Random;
+        this.board = new int[10][10];
+        this.Random = new int[10][10];
     }
 
     public int[][] getBoard() {
@@ -25,12 +24,11 @@ public class AI {
             int y = (int) (Math.random() * 10);
 
             if (board[x][y] == 1) {
-                System.out.println("The AI has hit your ship at coordinates X: " + x + ", Y: " + y + ".");
+                System.out.println("The AI has hit your ship at X: " + x + ", Y: " + y + ".");
                 board[x][y] = -1;
                 turns++;
-
-            } else if (board[x][y] == -1){
-                System.out.println("The AI missed your ship! Turn over.");
+            } else if (board[x][y] == -1) {
+                System.out.println("The AI missed your ship! ");
                 board[x][y] = 0;
                 AITURN = false;
             }
@@ -38,4 +36,3 @@ public class AI {
         return turns;
     }
 }
-
