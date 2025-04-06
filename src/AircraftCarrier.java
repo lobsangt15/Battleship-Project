@@ -1,12 +1,20 @@
 public class AircraftCarrier extends Space {
+    private int shipPartsNum;
     private boolean hasScoutPlanes;
 
     public AircraftCarrier(String symbol, int shipPartsNum, boolean hasScoutPlanes) {
         super(symbol, shipPartsNum);
-        this.hasScoutPlanes = true;
+        this.shipPartsNum = shipPartsNum;
+        this.hasScoutPlanes = hasScoutPlanes;
     }
 
-    public boolean isHasScoutPlanes() {
-        return hasScoutPlanes;
+    public void hit() {
+        if (shipPartsNum > 0) {
+            shipPartsNum--;
+        }
+    }
+
+    public boolean isSunk() {
+        return shipPartsNum <= 0;
     }
 }
