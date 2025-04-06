@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GameBoard {
@@ -19,7 +18,7 @@ public class GameBoard {
         ai = new AI(this);
         System.out.println("What is your name: ");
         String name = scan.nextLine();
-        player1 = new Player(name, 10, 0, 0);
+        player1 = new Player(name, 6, 0, 0);
         shop = new Shop(player1);
         setupAIBoard();
         setUpPlayerBoard();
@@ -316,11 +315,13 @@ public class GameBoard {
                 } else {
                     player1.printInventory();
                     System.out.println("Which item would you like to use:(Input item idx:)");
-                    int itemNum = scan.nextInt();
-                    if (player1.getInventory().get(itemNum).equals("Torpedo")) {
+                    int idx = scan.nextInt();
+                    if (player1.getInventory().get(idx).equals("Torpedo")) {
                         player1.useBomb();
-                    } else if (player1.getInventory().get(itemNum).equals("Scout Plane")) {
+                        player1.removeFromInv(idx);
+                    } else if (player1.getInventory().get(idx).equals("Scout Plane")) {
                         player1.useScoutPlane(PlayerBoard, AIboard);
+                        player1.removeFromInv(idx);
                     }
                     System.out.println("Opponents Board: ");
                     printAIBoard();
@@ -367,6 +368,18 @@ public class GameBoard {
                 System.out.println("Invalid option.");
             }
         }
+        if (gameOver()) {
+            if (player1.getScore() == 15) {
+                System.out.println(player1.getName() + " has defeated the AI!");
+            } else {
+                System.out.println("The AI has defeated " + player1.getName() + "!");
+            }
+            running = false;
+        }
+    }
+
+    public boolean gameOver() {
+        return player1.getScore() == 15 || ai.getScore() == 15;
     }
 }
 

@@ -1,9 +1,14 @@
 public class AI {
     private GameBoard game;
     private Space[][] playerBoard;
+    private int score = 0;
 
     public AI(GameBoard game) {
         this.game = game;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void AITurn(Space[][] playerBoard) {
@@ -17,6 +22,7 @@ public class AI {
                 if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
                     System.out.println("AI hit your ship at (" + x + ", " + y + ")!");
                     target.markAsHit();
+                    score++;
                     printPlayerBoard(playerBoard);
                 } else {
                     System.out.println("AI missed at (" + x + ", " + y + ").");

@@ -8,7 +8,6 @@ public class Player {
     private int moves;
     private int numBombs = 0;
     private int numScoutPlanes = 0;
-    private int numRecallPanels = 0;
     Scanner scan = new Scanner(System.in);
     private ArrayList<String> inventory = new ArrayList<>();
 
@@ -25,6 +24,10 @@ public class Player {
 
     public void addToInventory(String item) {
         inventory.add(item);
+    }
+
+    public void removeFromInv(int idx) {
+        inventory.remove(idx);
     }
 
     public String getName() {
@@ -71,36 +74,12 @@ public class Player {
         System.out.println(inventory);
     }
 
-    public boolean useScoutPlane() {
-        if (numScoutPlanes > 0) {
-            numScoutPlanes--;
-            return true;
-        }
-        return false;
-    }
-
-    public void addRecallPanels(int amount) {
-        numRecallPanels += amount;
-    }
-
-    public boolean useRecallPanel() {
-        if (numRecallPanels > 0) {
-            numRecallPanels--;
-            return true;
-        }
-        return false;
-    }
-
     public int getBombs() {
         return numBombs;
     }
 
     public int getScoutPlanes() {
         return numScoutPlanes;
-    }
-
-    public int getRecallPanels() {
-        return numRecallPanels;
     }
 
     public void PlayerTurn(Space[][] AIBoard) {
@@ -116,6 +95,7 @@ public class Player {
                 if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
                     System.out.println("You hit a ship at (" + x + ", " + y + ")!");
                     target.markAsHit();
+                    points ++;
                     score++;
                     printAIBoard(AIBoard);
                 } else {
@@ -151,6 +131,50 @@ public class Player {
         return containsAC;
     }
 
+    public boolean checkForSubmarine(Space[][] board) {
+        boolean containsSub = false;
+        for (Space[] spaces : board) {
+            for (Space space : spaces) {
+                if (space instanceof Submarine) {
+                    return true;
+                }
+            }
+        }
+        return containsSub;
+    }
+
+    public void useTorpedo(Space[][] yourBoard, Space[][] opponentBoard) {
+        if (!inventory.contains("Torpedo")) {
+            System.out.println("You don't own any Torpedo!");
+        } else if (!checkForSubmarine(yourBoard)) {
+            System.out.println("You can't use the Torpedo without an Submarine!");
+        } else {
+            boolean outOfBounds = true;
+            int row = 0;
+            int col = 0;
+            System.out.println("The Torpedo can hit 3 consecutive spaces horizontally, choose your middle coordinate!");
+            while (outOfBounds) {
+                System.out.println("Row:");
+                row = scan.nextInt();
+                System.out.println("Col:");
+                col = scan.nextInt();
+                if (!(col - 1 < 0 || col + 1 > 9)) {
+                    outOfBounds = false;
+                    System.out.println("You are going out of bounds choose coordinates again!");
+                }
+            }
+            for (int c = col - 1; c < col + 1; c++) {
+                Space target = opponentBoard[row][c];
+                if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Submarine || target instanceof Frigate) {
+                   opponentBoard[row][c].markAsHit();
+                   score++;
+                } else {
+                    opponentBoard[row][c].markAsMiss();
+                }
+            }
+        }
+    }
+
     public void useScoutPlane(Space[][] yourBoard, Space[][] opponentBoard) {
         if (!inventory.contains("Scout Plane")) {
             System.out.println("You don't own a scout plane!");
@@ -168,6 +192,7 @@ public class Player {
                 while (col <= 9) {
                     if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Submarine || target instanceof Frigate) {
                         opponentBoard[num][col].markAsHit();
+                        score++;
                         System.out.println("Your scout plane hit an opponent ship at (" + num + ", " + col + ")");
                         return;
                     } else {

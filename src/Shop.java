@@ -19,9 +19,8 @@ public class Shop {
     public void purchaseMenu() {
         System.out.println("What would you like to purchase?");
         System.out.println("(1) Torpedo (consumable): 3 points.");
-        System.out.println("(2) Scout Planes (consumable): 5 points.");
-        System.out.println("(3) Recall Panel (consumable): 10 points.");
-        System.out.println("(4) Experimental Mode (toggable): 0 points.");
+        System.out.println("(2) Scout Planes (consumable): 6 points.");
+        System.out.println("(3) Experimental Mode (toggable): 0 points.");
         System.out.println();
         System.out.println("Enter your choice: ");
         int choice = scan.nextInt();
@@ -37,9 +36,6 @@ public class Shop {
                 purchaseScoutPlanes(amount);
                 break;
             case 3:
-                purchaseRecallPanel(amount);
-                break;
-            case 4:
                 purchaseExperimentalMode(amount);
                 break;
             default:
@@ -77,7 +73,7 @@ public class Shop {
         scan.nextLine();
         String answer = scan.nextLine().toUpperCase();
         if (answer.equals("Y")) {
-            int cost = amount * 5;
+            int cost = amount * 6;
             amountOfStock = 3;
             System.out.println("There are " + amountOfStock + " Scout Plane(s) available for purchase, for 5 points.");
             if (player.getPoints() >= cost) {
@@ -94,25 +90,6 @@ public class Shop {
                 System.out.println("Restocking immediately!");
                 amountOfStock++;
             }
-        }
-    }
-
-    private void purchaseRecallPanel(int amount) {
-        int cost = amount * 10;
-        amountOfStock = 2;
-        System.out.println("There are " + amountOfStock + " Recall Panel(s) available for purchase, for 10 points.");
-        if (player.getPoints() >= cost) {
-            numRecallPanels += amount;
-            System.out.println("You purchased " + amount + " Recall Panel(s). Total Recall Panels: " + numRecallPanels);
-            amountOfStock--;
-            player.usePoints(cost);
-            System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
-        } else {
-            System.out.println("You do not have enough money!");
-        }
-        if (amountOfStock < 1) {
-            System.out.println("Restocking immediately!");
-            amountOfStock++;
         }
     }
 
