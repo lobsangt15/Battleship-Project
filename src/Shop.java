@@ -106,7 +106,7 @@ public class Shop extends Player{
     private void purchaseExperimentalMode(int amount) {
         int cost = 0;
         amountOfStock = 1;
-        System.out.println("You can buy Experimental Mode here. It's a free gamemode in which you can toy around with the game and cheat your way to victory.");
+        System.out.println("You can buy Experimental Mode here. It's a free game mode in which you can toy around with the game and cheat your way to victory.");
             if (amount > 1) {
                 System.out.println("You have already bought Experimental Mode.");
             } else {

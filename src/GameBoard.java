@@ -5,16 +5,35 @@ public class GameBoard {
     private Space [][] PlayerBoard;
     private Player player;
     private Scanner scan;
+    private AI ai;
+    private Player player1;
+    boolean experimentalModeUnlocked = false;
+    boolean running = true;
+    boolean experimentalModeActive = false;
 
 
     public GameBoard() {
         scan = new Scanner(System.in);
+        ai = new AI(this);
+        System.out.println("What is your name: ");
+        String name = scan.nextLine();
+        player1 = new Player(name, 10, 0, 0);
         setupAIBoard();
         setUpPlayerBoard();
         System.out.println("Opponents Board: ");
-        printBoard(AIboard);
+        printAIBoard();
         System.out.println("Your Board: ");
-        printBoard(PlayerBoard);
+        printPlayerBoard();
+        menu();
+    }
+
+    public void play() {
+        System.out.println(player1.getName() + "'s turn: ");
+        player1.PlayerTurn(AIboard);
+        printAIBoard();
+        System.out.println("AI's turn: ");
+        ai.AITurn(PlayerBoard);
+        printPlayerBoard();
     }
 
     private boolean setupHorizontally(Space shipType, Space[][] board, int startRow, int startCol, int shipSize, String direction) {
@@ -189,7 +208,7 @@ public class GameBoard {
                 destroyerPlaced = setupVertically(destroyer, PlayerBoard, row, col, 4, direction);
             }
         }
-        printBoard(PlayerBoard);
+        printPlayerBoard();
         System.out.println("Lets place down our Aircraft Carrier!");
         Space aircraftCarrier = new AircraftCarrier("🛳", 6, false);
         while (!aircraftCarrierPlaced) {
@@ -210,7 +229,7 @@ public class GameBoard {
                 aircraftCarrierPlaced = setupVertically(aircraftCarrier, PlayerBoard, row, col, 6, direction);
             }
         }
-        printBoard(PlayerBoard);
+        printPlayerBoard();
         System.out.println("Lets place down our Frigate!");
         Space frigate = new Frigate("⛵", 2);
         while (!frigatePlaced) {
@@ -231,7 +250,7 @@ public class GameBoard {
                 frigatePlaced = setupVertically(frigate, PlayerBoard, row, col, 2, direction);
             }
         }
-        printBoard(PlayerBoard);
+        printPlayerBoard();
         System.out.println("Lets place down our Submarine!");
         Space submarine = new Submarine("🚢", 3, false);
         while (!submarinePlaced) {
@@ -252,18 +271,80 @@ public class GameBoard {
                 submarinePlaced = setupVertically(submarine, PlayerBoard, row, col, 3, direction);
             }
         }
-        printBoard(PlayerBoard);
+        printPlayerBoard();
         System.out.println("Let the game begin!!!");
     }
 
-    public void printBoard(Space[][] board) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                System.out.print(board[i][j].getSymbol());
+    public void printAIBoard() {
+        for (Space[] spaces : AIboard) {
+            for (Space space : spaces) {
+                System.out.print(space.getSymbol());
             }
             System.out.println();
         }
         System.out.println("___________________________________________________________________");
+    }
+
+    public void printPlayerBoard() {
+        for (Space[] spaces : PlayerBoard) {
+            for (Space space : spaces) {
+                System.out.print(space.getSymbol());
+            }
+            System.out.println();
+        }
+        System.out.println("___________________________________________________________________");
+    }
+
+    public void menu() {
+        while (running) {
+            System.out.println("\n Battleship Menu");
+            System.out.println("[1] Attack");
+            System.out.println("[2] Use Items");
+            System.out.println("[3] Enter Shop");
+            System.out.println("[4] Options");
+            System.out.println("[5] Exit");
+            System.out.print("Choose: ");
+            String input = scan.nextLine();
+            if (input.equals("1")) {
+                play();
+            } else if (input.equals("3")) {
+                System.out.println("\n Shop");
+                System.out.println("1. Unlock Experimental Mode (free)");
+                System.out.println("2. Return to Main Menu");
+                String shopInput = scan.nextLine();
+                if (shopInput.equals("1")) {
+                    if (!experimentalModeUnlocked) {
+                        experimentalModeUnlocked = true;
+                        System.out.println("Experimental Mode unlocked!");
+                    } else {
+                        System.out.println("You've already unlocked it.");
+                    }
+                } else if (shopInput.equals("2")) {
+                    System.out.println("Returning to main menu...");
+                } else {
+                    System.out.println("Invalid choice.");
+                }
+            } else if (input.equals("4")) {
+                System.out.println("\n Options");
+                if (experimentalModeUnlocked) {
+                    System.out.println("Experimental Mode: Unlocked (have fun ig)");
+                    System.out.println("Status: " + (experimentalModeActive ? "ON" : "OFF"));
+                    System.out.println("Turn on Experimental Mode? (yes/no)");
+                    String toggle = scan.nextLine();
+                    if (toggle.equalsIgnoreCase("yes")) {
+                        experimentalModeActive = !experimentalModeActive;
+                        System.out.println("Experimental Mode is now " + (experimentalModeActive ? "ON" : "OFF"));
+                    }
+                } else {
+                    System.out.println("Experimental Mode: Locked");
+                }
+            } else if (input.equals("5")) {
+                System.out.println("Goodbye!");
+                running = false;
+            } else {
+                System.out.println("Invalid option.");
+            }
+        }
     }
 }
 
