@@ -1,21 +1,18 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Player {
+public class Player extends Char{
     private String name;
     private int points;
     private int score;
-    private int moves;
     private int numTorpedo = 0;
     private int numScoutPlanes = 0;
     Scanner scan = new Scanner(System.in);
     private ArrayList<String> inventory = new ArrayList<>();
 
-    public Player(String name, int points, int score, int moves) {
-        this.name = name;
+    public Player(String name, int score, int points) {
+        super(name, score);
         this.points = points;
-        this.score = score;
-        this.moves = moves;
     }
 
     public ArrayList<String> getInventory() {
@@ -30,20 +27,8 @@ public class Player {
         inventory.remove(idx);
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int getPoints() {
         return points;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public int getMoves() {
-        return moves;
     }
 
     public void usePoints(int amount) {
@@ -78,7 +63,8 @@ public class Player {
         return numScoutPlanes;
     }
 
-    public void PlayerTurn(Space[][] AIBoard) {
+    @Override
+    public void takeTurns(Space[][] AIBoard) {
         boolean turnOngoing = true;
         while (turnOngoing) {
             System.out.println("Row: ");
@@ -222,9 +208,9 @@ public class Player {
                 if (target instanceof Destroyer) {
                     opponentsBoard[r][c] = new Destroyer("⛴", 4);
                 } else if (target instanceof AircraftCarrier) {
-                    opponentsBoard[r][c] = new AircraftCarrier("🛳", 6, false);
+                    opponentsBoard[r][c] = new AircraftCarrier("🛳", 6);
                 } else if (target instanceof Submarine) {
-                    opponentsBoard[r][c] = new Submarine("🚢", 3, false);
+                    opponentsBoard[r][c] = new Submarine("🚢", 3);
                 } else if (target instanceof Frigate) {
                     opponentsBoard[r][c] = new Frigate("⛵", 2);
                 }

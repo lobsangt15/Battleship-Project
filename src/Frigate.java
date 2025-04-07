@@ -5,14 +5,4 @@ public class Frigate extends Space {
         super(symbol, shipPartsNum);
         this.shipPartsNum = shipPartsNum;
     }
-
-    public void hit() {
-        if (shipPartsNum > 0) {
-            shipPartsNum--;
-        }
-    }
-
-    public boolean isSunk() {
-        return shipPartsNum <= 0;
-    }
 }

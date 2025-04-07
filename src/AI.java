@@ -1,20 +1,19 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class AI {
+public class AI extends Char {
     private GameBoard game;
     private int score = 0;
+    String name;
     private List<int[]> targets = new ArrayList<>(); // list of next tiles to try
 
-    public AI(GameBoard game) {
+    public AI(String name, int score, GameBoard game) {
+        super(name, score);
         this.game = game;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void AITurn(Space[][] playerBoard) {
+    @Override
+    public void takeTurns(Space[][] playerBoard) {
         boolean turnOngoing = true;
 
         while (turnOngoing) {

@@ -15,10 +15,10 @@ public class GameBoard {
 
     public GameBoard() {
         scan = new Scanner(System.in);
-        ai = new AI(this);
+        ai = new AI("AI", 0, this);
         System.out.println("What is your name: ");
         String name = scan.nextLine();
-        player1 = new Player(name, 6, 0, 0);
+        player1 = new Player(name, 0, 6);
         shop = new Shop(player1);
         setupAIBoard();
         setUpPlayerBoard();
@@ -31,10 +31,10 @@ public class GameBoard {
 
     public void play() {
         System.out.println(player1.getName() + "'s turn: ");
-        player1.PlayerTurn(AIboard);
+        player1.takeTurns(AIboard);
         printAIBoard();
         System.out.println("AI's turn: ");
-        ai.AITurn(PlayerBoard);
+        ai.takeTurns(PlayerBoard);
         printPlayerBoard();
     }
 
@@ -61,9 +61,9 @@ public class GameBoard {
             for (int i = 0; i < shipSize; i++) {
                 switch (shipType) {
                     case Destroyer destroyer -> board[startRow][startCol + i] = new Destroyer(symbol, 4);
-                    case AircraftCarrier aircraftCarrier -> board[startRow][startCol + i] = new AircraftCarrier(symbol, 6, false);
+                    case AircraftCarrier aircraftCarrier -> board[startRow][startCol + i] = new AircraftCarrier(symbol, 6);
                     case Frigate frigate -> board[startRow][startCol + i] = new Frigate(symbol, 2);
-                    case null, default -> board[startRow][startCol + i] = new Submarine(symbol, 3, false);
+                    case null, default -> board[startRow][startCol + i] = new Submarine(symbol, 3);
                 }
             }
         } else {
@@ -74,9 +74,9 @@ public class GameBoard {
             for (int i = 0; i < shipSize; i++) {
                 switch (shipType) {
                     case Destroyer destroyer -> board[startRow][startCol - i] = new Destroyer(symbol, 4);
-                    case AircraftCarrier aircraftCarrier -> board[startRow][startCol - i] = new AircraftCarrier(symbol, 6, false);
+                    case AircraftCarrier aircraftCarrier -> board[startRow][startCol - i] = new AircraftCarrier(symbol, 6);
                     case Frigate unmannedShip -> board[startRow][startCol - i] = new Frigate(symbol, 2);
-                    case null, default -> board[startRow][startCol - i] = new Submarine(symbol, 3, false);
+                    case null, default -> board[startRow][startCol - i] = new Submarine(symbol, 3);
                 }
             }
         }
@@ -106,9 +106,9 @@ public class GameBoard {
             for (int i = 0; i < shipSize; i++) {
                 switch (shipType) {
                     case Destroyer destroyer -> board[startRow + i][startCol] = new Destroyer(symbol, 4);
-                    case AircraftCarrier aircraftCarrier -> board[startRow + i][startCol] = new AircraftCarrier(symbol, 6, false);
+                    case AircraftCarrier aircraftCarrier -> board[startRow + i][startCol] = new AircraftCarrier(symbol, 6);
                     case Frigate frigate -> board[startRow + i][startCol] = new Frigate(symbol, 2);
-                    case null, default -> board[startRow + i][startCol] = new Submarine(symbol, 3, false);
+                    case null, default -> board[startRow + i][startCol] = new Submarine(symbol, 3);
                 }
             }
         } else {
@@ -119,9 +119,9 @@ public class GameBoard {
             for (int i = 0; i < shipSize; i++) {
                 switch (shipType) {
                     case Destroyer destroyer -> board[startRow - i][startCol] = new Destroyer(symbol, 4);
-                    case AircraftCarrier aircraftCarrier -> board[startRow - i][startCol] = new AircraftCarrier(symbol, 6, false);
+                    case AircraftCarrier aircraftCarrier -> board[startRow - i][startCol] = new AircraftCarrier(symbol, 6);
                     case Frigate frigate -> board[startRow - i][startCol] = new Frigate(symbol, 2);
-                    case null, default -> board[startRow - i][startCol] = new Submarine(symbol, 3, false);
+                    case null, default -> board[startRow - i][startCol] = new Submarine(symbol, 3);
                 }
             }
         }
@@ -141,38 +141,38 @@ public class GameBoard {
         if (randomPreset == 1) {
             Space Destroyer = new Destroyer("⛴", 4);
             setupHorizontally(Destroyer, AIboard, 3, 1, 4, "R");
-            Space aircraftCarrier = new AircraftCarrier("🛳", 6, false);
+            Space aircraftCarrier = new AircraftCarrier("🛳", 6);
             setupVertically(aircraftCarrier, AIboard, 2, 9, 6, "D");
             Space frigate = new Frigate("⛵", 2);
             setupHorizontally(frigate, AIboard, 8, 1, 2, "R");
-            Space submarine = new Submarine("🚢", 3, false);
+            Space submarine = new Submarine("🚢", 3);
             setupHorizontally(submarine, AIboard, 9, 4, 3, "R");
         } else if (randomPreset == 2) {
             Space Destroyer = new Destroyer("⛴", 4);
             setupHorizontally(Destroyer, AIboard, 3, 4, 4, "R");
-            Space aircraftCarrier = new AircraftCarrier("🛳", 6, false);
+            Space aircraftCarrier = new AircraftCarrier("🛳", 6);
             setupHorizontally(aircraftCarrier, AIboard, 1, 2, 6, "R");
             Space frigate = new Frigate("⛵", 2);
             setupHorizontally(frigate, AIboard, 7, 7, 2, "R");
-            Space submarine = new Submarine("🚢", 3, false);
+            Space submarine = new Submarine("🚢", 3);
             setupVertically(submarine, AIboard, 6, 1, 3, "D");
         } else if (randomPreset == 3) {
             Space Destroyer = new Destroyer("⛴", 4);
             setupVertically(Destroyer, AIboard, 5, 9, 4, "D");
-            Space aircraftCarrier = new AircraftCarrier("🛳", 6, false);
+            Space aircraftCarrier = new AircraftCarrier("🛳", 6);
             setupVertically(aircraftCarrier, AIboard, 0, 4, 6, "D");
             Space frigate = new Frigate("⛵", 2);
             setupHorizontally(frigate, AIboard, 7, 7, 2, "R");
-            Space submarine = new Submarine("🚢", 3, false);
+            Space submarine = new Submarine("🚢", 3);
             setupHorizontally(submarine, AIboard, 4, 0, 3, "R");
         } else {
             Space Destroyer = new Destroyer("⛴", 4);
             setupHorizontally(Destroyer, AIboard, 5, 3, 4, "R");
-            Space aircraftCarrier = new AircraftCarrier("🛳", 6, false);
+            Space aircraftCarrier = new AircraftCarrier("🛳", 6);
             setupHorizontally(aircraftCarrier, AIboard, 3, 0, 6, "R");
             Space frigate = new Frigate("⛵", 2);
             setupHorizontally(frigate, AIboard, 2, 2, 2, "R");
-            Space submarine = new Submarine("🚢", 3, false);
+            Space submarine = new Submarine("🚢", 3);
             setupVertically(submarine, AIboard, 7, 6, 3, "D");
         }
     }
@@ -191,7 +191,7 @@ public class GameBoard {
         boolean frigatePlaced = false;
         boolean submarinePlaced = false;
         System.out.println("Lets first place down our Destroyer!");
-        Destroyer destroyer = new Destroyer("⛴", 4);
+        Space destroyer = new Destroyer("⛴", 4);
         while (!destroyerPlaced) {
             System.out.println("Row: ");
             int row = scan.nextInt();
@@ -212,7 +212,7 @@ public class GameBoard {
         }
         printPlayerBoard();
         System.out.println("Lets place down our Aircraft Carrier!");
-        Space aircraftCarrier = new AircraftCarrier("🛳", 6, false);
+        Space aircraftCarrier = new AircraftCarrier("🛳", 6);
         while (!aircraftCarrierPlaced) {
             System.out.println("Row: ");
             int row = scan.nextInt();
@@ -254,7 +254,7 @@ public class GameBoard {
         }
         printPlayerBoard();
         System.out.println("Lets place down our Submarine!");
-        Space submarine = new Submarine("🚢", 3, false);
+        Space submarine = new Submarine("🚢", 3);
         while (!submarinePlaced) {
             System.out.println("Row: ");
             int row = scan.nextInt();
