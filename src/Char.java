@@ -15,5 +15,13 @@ public class Char {
         return score;
     }
 
+    public void addScore(int num) {
+        score += 1;
+    }
+
     public void takeTurns(Space[][] board) {}
+
+    public boolean gameOver() {
+        return getScore() >= 15;
+    }
 }

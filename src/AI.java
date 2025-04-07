@@ -37,9 +37,12 @@ public class AI extends Char {
             if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
                 System.out.println("AI hit your ship at (" + x + ", " + y + ")!");
                 target.markAsHit();
-                score++;
+                addScore(1);
                 addAdjacentTargets(x, y, playerBoard);
                 printPlayerBoard(playerBoard);
+                if (gameOver()) {
+                    return;
+                }
             } else {
                 System.out.println("AI missed at (" + x + ", " + y + ").");
                 target.markAsMiss();

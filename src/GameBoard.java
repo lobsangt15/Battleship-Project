@@ -299,11 +299,22 @@ public class GameBoard {
 
     public void menu() {
         while (running) {
+            if (player1.gameOver() || ai.gameOver()) {
+                if (player1.gameOver()) {
+                    System.out.println(player1.getName() + " has defeated the AI!");
+                } else if (player1.gameOver() & ai.gameOver()){
+                    System.out.println("The battle between " + player1.getName() + " and AI has ended in a draw!");
+                } else {
+                    System.out.println("The AI has defeated " + player1.getName());
+                }
+                return;
+            }
             System.out.println("\n Battleship Menu");
             System.out.println("[1] Attack");
             System.out.println("[2] Use Items");
             System.out.println("[3] Enter Shop");
             System.out.println("[4] Exit");
+            System.out.println("[5] Check Score");
             System.out.print("Choose: ");
             String input = scan.nextLine();
             if (input.equals("1")) {
@@ -315,18 +326,13 @@ public class GameBoard {
                     player1.printInventory();
                     System.out.println("Which item would you like to use:(Input item idx:)");
                     int idx = scan.nextInt();
-                    if (player1.getInventory().get(idx).equals("Torpedo")) {
-                        player1.useTorpedo(PlayerBoard, AIboard);
-                        player1.addTorpedo(-1);
-                        if (player1.getTorpedo() == 0) {
-                            player1.removeFromInv(idx);
-                        }
+                    if (player1.getInventory().get(idx).equals("Bomb")) {
+                        player1.useBomb(PlayerBoard, AIboard);
+                        player1.removeFromInv(idx);
                     } else if (player1.getInventory().get(idx).equals("Scout Plane")) {
                         player1.useScoutPlane(PlayerBoard, AIboard);
-                        player1.addScoutPlanes(-1);
-                        if (player1.getScoutPlanes() == 0) {
-                            player1.removeFromInv(idx);
-                        }
+                        player1.removeFromInv(idx);
+
                     } else if (player1.getInventory().get(idx).equals("Experimental Mode")) {
                         player1.useExperimentalMode(AIboard);
                         player1.removeFromInv(idx);
@@ -350,22 +356,13 @@ public class GameBoard {
             } else if (input.equals("4")) {
                 System.out.println("Goodbye!");
                 running = false;
+            } else if (input.equals("5")) {
+                System.out.println("Score: " + player1.getScore());
+                System.out.println(player1.gameOver());
             } else {
                 System.out.println("Invalid option.");
             }
         }
-        if (gameOver()) {
-            if (player1.getScore() == 15) {
-                System.out.println(player1.getName() + " has defeated the AI!");
-            } else {
-                System.out.println("The AI has defeated " + player1.getName() + "!");
-            }
-            running = false;
-        }
-    }
-
-    public boolean gameOver() {
-        return player1.getScore() == 15 || ai.getScore() == 15;
     }
 }
 
