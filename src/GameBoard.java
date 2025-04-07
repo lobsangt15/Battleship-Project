@@ -316,11 +316,17 @@ public class GameBoard {
                     System.out.println("Which item would you like to use:(Input item idx:)");
                     int idx = scan.nextInt();
                     if (player1.getInventory().get(idx).equals("Torpedo")) {
-                        player1.useBomb();
-                        player1.removeFromInv(idx);
+                        player1.useTorpedo(PlayerBoard, AIboard);
+                        player1.addTorpedo(-1);
+                        if (player1.getTorpedo() == 0) {
+                            player1.removeFromInv(idx);
+                        }
                     } else if (player1.getInventory().get(idx).equals("Scout Plane")) {
                         player1.useScoutPlane(PlayerBoard, AIboard);
-                        player1.removeFromInv(idx);
+                        player1.addScoutPlanes(-1);
+                        if (player1.getScoutPlanes() == 0) {
+                            player1.removeFromInv(idx);
+                        }
                     } else if (player1.getInventory().get(idx).equals("Experimental Mode")) {
                         player1.useExperimentalMode(AIboard);
                         player1.removeFromInv(idx);

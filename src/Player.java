@@ -6,7 +6,7 @@ public class Player {
     private int points;
     private int score;
     private int moves;
-    private int numBombs = 0;
+    private int numTorpedo = 0;
     private int numScoutPlanes = 0;
     Scanner scan = new Scanner(System.in);
     private ArrayList<String> inventory = new ArrayList<>();
@@ -54,16 +54,12 @@ public class Player {
         points += amount;
     }
 
-    public void addBombs(int amount) {
-        numBombs += amount;
+    public void addTorpedo(int amount) {
+        numTorpedo += amount;
     }
 
-    public boolean useBomb() {
-        if (numBombs > 0) {
-            numBombs--;
-            return true;
-        }
-        return false;
+    public int getTorpedo() {
+        return numTorpedo;
     }
 
     public void addScoutPlanes(int amount) {
@@ -75,7 +71,7 @@ public class Player {
     }
 
     public int getBombs() {
-        return numBombs;
+        return numTorpedo;
     }
 
     public int getScoutPlanes() {
@@ -163,7 +159,7 @@ public class Player {
                     System.out.println("You are going out of bounds choose coordinates again!");
                 }
             }
-            for (int c = col - 1; c < col + 1; c++) {
+            for (int c = col - 1; c <= col + 1; c++) {
                 Space target = opponentBoard[row][c];
                 if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Submarine || target instanceof Frigate) {
                    opponentBoard[row][c].markAsHit();
@@ -224,16 +220,13 @@ public class Player {
             for (int c = 0; c < opponentsBoard[r].length; c++) {
                 Space target = opponentsBoard[r][c];
                 if (target instanceof Destroyer) {
-                    target = new Destroyer("⛴", 4);
-                }
-                if (target instanceof AircraftCarrier) {
-                    target = new AircraftCarrier("🛳", 6, false);
-                }
-                if (target instanceof Submarine) {
-                    target = new Submarine("🚢", 3, false);
-                }
-                if (target instanceof Frigate) {
-                    target = new Frigate("⛵", 2);
+                    opponentsBoard[r][c] = new Destroyer("⛴", 4);
+                } else if (target instanceof AircraftCarrier) {
+                    opponentsBoard[r][c] = new AircraftCarrier("🛳", 6, false);
+                } else if (target instanceof Submarine) {
+                    opponentsBoard[r][c] = new Submarine("🚢", 3, false);
+                } else if (target instanceof Frigate) {
+                    opponentsBoard[r][c] = new Frigate("⛵", 2);
                 }
             }
         }

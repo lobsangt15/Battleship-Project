@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class AI {
     private GameBoard game;
-    private Space[][] playerBoard;
     private int score = 0;
+    private List<int[]> targets = new ArrayList<>(); // list of next tiles to try
 
     public AI(GameBoard game) {
         this.game = game;
@@ -13,26 +16,54 @@ public class AI {
 
     public void AITurn(Space[][] playerBoard) {
         boolean turnOngoing = true;
-        while (turnOngoing) {
-            int x = (int)(Math.random() * 10);
-            int y = (int)(Math.random() * 10);
-            Space target = playerBoard[x][y];
 
-            if (!target.isHit()) {
-                if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
-                    System.out.println("AI hit your ship at (" + x + ", " + y + ")!");
-                    target.markAsHit();
-                    score++;
-                    printPlayerBoard(playerBoard);
-                } else {
-                    System.out.println("AI missed at (" + x + ", " + y + ").");
-                    target.markAsMiss();
-                    turnOngoing = false;
-                }
+        while (turnOngoing) {
+            int x, y;
+
+            if (!targets.isEmpty()) {
+                int[] nextTarget = targets.removeFirst();
+                x = nextTarget[0];
+                y = nextTarget[1];
             } else {
-                System.out.println("You have already hit this coordinate!");
+                x = (int)(Math.random() * 9);
+                y = (int)(Math.random() * 9);
+            }
+
+            // Skip already-hit spots
+            Space target = playerBoard[x][y];
+            if (target.isHit()) {
+                continue;
+            }
+
+            if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
+                System.out.println("AI hit your ship at (" + x + ", " + y + ")!");
+                target.markAsHit();
+                score++;
+                addAdjacentTargets(x, y, playerBoard);
+                printPlayerBoard(playerBoard);
+            } else {
+                System.out.println("AI missed at (" + x + ", " + y + ").");
+                target.markAsMiss();
+                turnOngoing = false;
             }
         }
+    }
+
+    private void addAdjacentTargets(int x, int y, Space[][] board) {
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        for (int[] dir : directions) {
+            int newX = x + dir[0];
+            int newY = y + dir[1];
+
+            if (inBounds(newX, newY) && !board[newX][newY].isHit()) {
+                targets.add(new int[] { newX, newY });
+            }
+        }
+    }
+
+    private boolean inBounds(int x, int y) {
+        return x >= 0 && x < 10 && y >= 0 && y < 10;
     }
 
     public void printPlayerBoard(Space[][] board) {

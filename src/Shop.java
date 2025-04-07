@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Shop {
     private int priceOfItem;
     private int amountOfStock;
-    private int numBombs;
+    private int numTorpedo;
     private int numScoutPlanes;
     private int numRecallPanels;
     private boolean purchasedExperimentalMode;
@@ -52,12 +52,14 @@ public class Shop {
             amountOfStock = 5;
             System.out.println("There are " + amountOfStock + " Torpedo(s) available for purchase, for 3 points.");
             if (player.getPoints() >= cost) {
-                numBombs += amount;
-                System.out.println("You purchased " + amount + " Torpedo(s). Total Torpedo's: " + numBombs);
+                numTorpedo += amount;
+                System.out.println("You purchased " + amount + " Torpedo(s). Total Torpedo's: " + numTorpedo);
                 amountOfStock--;
                 player.usePoints(cost);
                 System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
                 player.addToInventory("Torpedo");
+            } else if (amount > amountOfStock) {
+                System.out.println("We don't have that much in stock!");
             } else {
                 System.out.println("You do not have enough money!");
             }
@@ -83,6 +85,8 @@ public class Shop {
                 player.usePoints(cost);
                 System.out.println(player.getName() + " now has " + player.getPoints() + " points.");
                 player.addToInventory("Scout Plane");
+            } else if (amount > amountOfStock) {
+                System.out.println("We don't have that much in stock!");
             } else {
                 System.out.println("You do not have enough money!");
             }

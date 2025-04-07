@@ -1,10 +1,10 @@
 public class Submarine extends Space{
     private int shipPartsNum;
-    private boolean hasTorpedo;
+    private boolean hasBomb;
 
-    public Submarine (String symbol, int shipPartsNum, boolean hasTorpedo) {
+    public Submarine (String symbol, int shipPartsNum, boolean hasBomb) {
         super(symbol, shipPartsNum);
         this.shipPartsNum = shipPartsNum;
-        this.hasTorpedo = hasTorpedo;
+        this.hasBomb = hasBomb;
     }
 }
