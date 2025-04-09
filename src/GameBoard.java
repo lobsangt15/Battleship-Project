@@ -59,6 +59,13 @@ public class GameBoard {
                 return false;
             }
             for (int i = 0; i < shipSize; i++) {
+                Space target = board[startRow][startCol + i];
+                if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
+                    System.out.println("You can't overlap your ships!!!");
+                    return false;
+                }
+            }
+            for (int i = 0; i < shipSize; i++) {
                 switch (shipType) {
                     case Destroyer destroyer -> board[startRow][startCol + i] = new Destroyer(symbol, 4);
                     case AircraftCarrier aircraftCarrier -> board[startRow][startCol + i] = new AircraftCarrier(symbol, 6);
@@ -66,10 +73,17 @@ public class GameBoard {
                     case null, default -> board[startRow][startCol + i] = new Submarine(symbol, 3);
                 }
             }
-        } else {
+        } else if (direction.equals("L")){
             if (startCol - shipSize < 0) {
                 System.out.println("Your ship is going out of bounds, choose another coordinate!");
                 return false;
+            }
+            for (int i = 0; i < shipSize; i++) {
+                Space target = board[startRow][startCol - i];
+                if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
+                    System.out.println("You can't overlap your ships!!!");
+                    return false;
+                }
             }
             for (int i = 0; i < shipSize; i++) {
                 switch (shipType) {
@@ -79,6 +93,9 @@ public class GameBoard {
                     case null, default -> board[startRow][startCol - i] = new Submarine(symbol, 3);
                 }
             }
+        } else {
+            System.out.println("Invalid input!!!");
+            return false;
         }
         return true;
     }
@@ -104,6 +121,13 @@ public class GameBoard {
                 return false;
             }
             for (int i = 0; i < shipSize; i++) {
+                Space target = board[startRow + i][startCol];
+                if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
+                    System.out.println("You can't overlap your ships!!!");
+                    return false;
+                }
+            }
+            for (int i = 0; i < shipSize; i++) {
                 switch (shipType) {
                     case Destroyer destroyer -> board[startRow + i][startCol] = new Destroyer(symbol, 4);
                     case AircraftCarrier aircraftCarrier -> board[startRow + i][startCol] = new AircraftCarrier(symbol, 6);
@@ -111,10 +135,17 @@ public class GameBoard {
                     case null, default -> board[startRow + i][startCol] = new Submarine(symbol, 3);
                 }
             }
-        } else {
+        } else if (direction.equals("U")){
             if (startCol - shipSize < 0) {
                 System.out.println("Your ship is going out of bounds, choose another coordinate!");
                 return false;
+            }
+            for (int i = 0; i < shipSize; i++) {
+                Space target = board[startRow - i][startCol];
+                if (target instanceof Destroyer || target instanceof AircraftCarrier || target instanceof Frigate || target instanceof Submarine) {
+                    System.out.println("You can't overlap your ships!!!");
+                    return false;
+                }
             }
             for (int i = 0; i < shipSize; i++) {
                 switch (shipType) {
@@ -186,6 +217,8 @@ public class GameBoard {
                 }
             }
         }
+        int row = 0;
+        int col = 0;
         boolean destroyerPlaced = false;
         boolean aircraftCarrierPlaced = false;
         boolean frigatePlaced = false;
@@ -193,10 +226,18 @@ public class GameBoard {
         System.out.println("Lets first place down our Destroyer!");
         Space destroyer = new Destroyer("⛴", 4);
         while (!destroyerPlaced) {
-            System.out.println("Row: ");
-            int row = scan.nextInt();
-            System.out.println("Column: ");
-            int col = scan.nextInt();
+            boolean inBounds = false;
+            while (!inBounds) {
+                System.out.println("Row: ");
+                row = scan.nextInt();
+                System.out.println("Column: ");
+                col = scan.nextInt();
+                if (row >= 0 && row <= 9 && col >= 0 && col <= 9) {
+                    inBounds = true;
+                } else {
+                    System.out.println("Your coordinate is out of bounds! Choose new coordinates!");
+                }
+            }
             System.out.println("Horizontally or Vertically (H/V): ");
             scan.nextLine();
             String choice = scan.nextLine().toUpperCase();
@@ -204,20 +245,30 @@ public class GameBoard {
                 System.out.println("Which direction (R/L): ");
                 String direction = scan.nextLine().toUpperCase();
                 destroyerPlaced = setupHorizontally(destroyer, PlayerBoard, row, col, 4, direction);
-            } else {
+            } else if (choice.equals("V")){
                 System.out.println("Which direction (U/D): ");
                 String direction = scan.nextLine().toUpperCase();
                 destroyerPlaced = setupVertically(destroyer, PlayerBoard, row, col, 4, direction);
+            } else {
+                System.out.println("Invalid choice!!!");
             }
         }
         printPlayerBoard();
         System.out.println("Lets place down our Aircraft Carrier!");
         Space aircraftCarrier = new AircraftCarrier("🛳", 6);
         while (!aircraftCarrierPlaced) {
-            System.out.println("Row: ");
-            int row = scan.nextInt();
-            System.out.println("Column: ");
-            int col = scan.nextInt();
+            boolean inBounds = false;
+            while (!inBounds) {
+                System.out.println("Row: ");
+                row = scan.nextInt();
+                System.out.println("Column: ");
+                col = scan.nextInt();
+                if (row >= 0 && row <= 9 && col >= 0 && col <= 9) {
+                    inBounds = true;
+                } else {
+                    System.out.println("Your coordinate is out of bounds! Choose new coordinates!");
+                }
+            }
             System.out.println("Horizontally or Vertically (H/V): ");
             scan.nextLine();
             String choice = scan.nextLine().toUpperCase();
@@ -225,20 +276,30 @@ public class GameBoard {
                 System.out.println("Which direction (R/L): ");
                 String direction = scan.nextLine().toUpperCase();
                 aircraftCarrierPlaced = setupHorizontally(aircraftCarrier, PlayerBoard, row, col, 6, direction);
-            } else {
+            } else if (choice.equals("V")){
                 System.out.println("Which direction (U/D): ");
                 String direction = scan.nextLine().toUpperCase();
                 aircraftCarrierPlaced = setupVertically(aircraftCarrier, PlayerBoard, row, col, 6, direction);
+            } else {
+                System.out.println("Invalid choice!!!");
             }
         }
         printPlayerBoard();
         System.out.println("Lets place down our Frigate!");
         Space frigate = new Frigate("⛵", 2);
         while (!frigatePlaced) {
-            System.out.println("Row: ");
-            int row = scan.nextInt();
-            System.out.println("Column: ");
-            int col = scan.nextInt();
+            boolean inBounds = false;
+            while (!inBounds) {
+                System.out.println("Row: ");
+                row = scan.nextInt();
+                System.out.println("Column: ");
+                col = scan.nextInt();
+                if (row >= 0 && row <= 9 && col >= 0 && col <= 9) {
+                    inBounds = true;
+                } else {
+                    System.out.println("Your coordinate is out of bounds! Choose new coordinates!");
+                }
+            }
             System.out.println("Horizontally or Vertically (H/V): ");
             scan.nextLine();
             String choice = scan.nextLine().toUpperCase();
@@ -246,20 +307,30 @@ public class GameBoard {
                 System.out.println("Which direction (R/L): ");
                 String direction = scan.nextLine().toUpperCase();
                 frigatePlaced = setupHorizontally(frigate, PlayerBoard, row, col, 2, direction);
-            } else {
+            } else if (choice.equals("V")){
                 System.out.println("Which direction (U/D): ");
                 String direction = scan.nextLine().toUpperCase();
                 frigatePlaced = setupVertically(frigate, PlayerBoard, row, col, 2, direction);
+            } else {
+                System.out.println("Invalid choice!!!");
             }
         }
         printPlayerBoard();
         System.out.println("Lets place down our Submarine!");
         Space submarine = new Submarine("🚢", 3);
         while (!submarinePlaced) {
-            System.out.println("Row: ");
-            int row = scan.nextInt();
-            System.out.println("Column: ");
-            int col = scan.nextInt();
+            boolean inBounds = false;
+            while (!inBounds) {
+                System.out.println("Row: ");
+                row = scan.nextInt();
+                System.out.println("Column: ");
+                col = scan.nextInt();
+                if (row >= 0 && row <= 9 && col >= 0 && col <= 9) {
+                    inBounds = true;
+                } else {
+                    System.out.println("Your coordinate is out of bounds! Choose new coordinates!");
+                }
+            }
             System.out.println("Horizontally or Vertically (H/V): ");
             scan.nextLine();
             String choice = scan.nextLine().toUpperCase();
@@ -267,10 +338,12 @@ public class GameBoard {
                 System.out.println("Which direction (R/L): ");
                 String direction = scan.nextLine().toUpperCase();
                 submarinePlaced = setupHorizontally(submarine, PlayerBoard, row, col, 3, direction);
-            } else {
+            } else if (choice.equals("V")){
                 System.out.println("Which direction (U/D): ");
                 String direction = scan.nextLine().toUpperCase();
                 submarinePlaced = setupVertically(submarine, PlayerBoard, row, col, 3, direction);
+            } else {
+                System.out.println("Invalid choice!!!");
             }
         }
         printPlayerBoard();
@@ -320,7 +393,7 @@ public class GameBoard {
             if (input.equals("1")) {
                 play();
             } else if (input.equals("2")) {
-                if (player1.getInventory() == null) {
+                if (player1.getInventory().isEmpty()) {
                     System.out.println("You don't own any items!");
                 } else {
                     player1.printInventory();
@@ -358,7 +431,7 @@ public class GameBoard {
                 running = false;
             } else if (input.equals("5")) {
                 System.out.println("Score: " + player1.getScore());
-                System.out.println(player1.gameOver());
+                System.out.println("Game Over: " + player1.gameOver());
             } else {
                 System.out.println("Invalid option.");
             }
